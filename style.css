@@ -6,37 +6,84 @@ html, body {
 
 .wrapper {
     width: 100%;
-    max-height: 100vh;
-    background-color: #000;
-    
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
 }
 
 .gallery {
-    overflow-x: scroll;
-    width: 200vw;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    
     ul {
         display: flex;
         align-items: flex-end;
+        gap:0;
+        height: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: fit-content;
     }
 }
 
-
 .item {
-    width: 100%;
-    max-width: 1000px;
-    max-height: 100vh;
-    box-sizing: border-box;
-    overflow: hidden;
-    border-radius: 5px;
-
+    height: 70vh;
+    width: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 10px;
+    scroll-snap-stop: always;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    
+    /* Créer une timeline basée sur la vue de l'élément */
+    view-timeline: --item-view block;
+    
+    /* Animation scroll-driven qui suit la position de l'item dans la vue */
+    animation: centerAnimation linear both;
+    animation-timeline: view(--item-view);
+    /* L'animation commence quand l'item entre dans la vue et se termine quand il sort */
+    animation-range: entry 0% entry 100%;
+    
+    /* Espacement entre les items */
     &:not(:first-child) {
-        margin-left: -10%;
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        margin-left: -10vw;
     }
 
     img {
-        width: 100%;
         height: 100%;
-        object-fit: cover;
+        width: auto;
+        display: block;
+        object-fit: contain;
+    }
+}
+
+/* Animation qui se déclenche quand l'item passe au centre */
+@keyframes centerAnimation {
+    /* Début : l'item entre dans la vue (à gauche) */
+    0%, 30% {
+        transform: translateY(0) scale(0.9);
+    }
+    
+    /* Milieu : l'item est au centre de l'écran */
+    40%, 60% {
+        transform: translateY(20%) scale(1.7);
+    }
+    
+    /* Fin : l'item sort de la vue (vers la droite) */
+    70%, 100% {
+        transform: translateY(0) scale(0.9);
     }
 }
