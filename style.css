@@ -25,6 +25,7 @@ html, body {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     margin-bottom: 40px;
 
     
@@ -35,7 +36,8 @@ html, body {
         height: 100%;
         list-style: none;
         margin: 0;
-        padding: 0;
+        /* Padding horizontal pour permettre aux items de sortir complètement de la vue */
+        padding: 0 50vw;
         width: fit-content;
     }
 }
@@ -51,12 +53,9 @@ html, body {
     scroll-snap-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transform-origin: bottom;
-    
-    /* Animation scroll-driven pour scroll horizontal */
-    /* Syntaxe raccourcie avec view-timeline */
     animation: centerAnimation linear backwards;
     animation-timeline: view(0% inline);
-    animation-range: contain;
+    animation-range: entry 0% exit 80%;
     
     /* Espacement entre les items */
     &:not(:first-child) {
