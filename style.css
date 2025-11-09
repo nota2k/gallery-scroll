@@ -25,6 +25,8 @@ html, body {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    margin-bottom: 40px;
+
     
     ul {
         display: flex;
@@ -46,16 +48,15 @@ html, body {
     align-items: flex-end;
     border-radius: 10px;
     scroll-snap-stop: always;
+    scroll-snap-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transform-origin: bottom;
     
-    /* Créer une timeline basée sur la vue de l'élément */
-    view-timeline: --item-view block;
-    
-    /* Animation scroll-driven qui suit la position de l'item dans la vue */
-    animation: centerAnimation linear both;
-    animation-timeline: view(--item-view);
-    /* L'animation commence quand l'item entre dans la vue et se termine quand il sort */
-    animation-range: entry 0% entry 100%;
+    /* Animation scroll-driven pour scroll horizontal */
+    /* Syntaxe raccourcie avec view-timeline */
+    animation: centerAnimation linear backwards;
+    animation-timeline: view(0% inline);
+    animation-range: contain;
     
     /* Espacement entre les items */
     &:not(:first-child) {
@@ -70,20 +71,24 @@ html, body {
     }
 }
 
+/* .item:hover {
+    transform: translateY(50px) scale(1.1);
+} */
+
 /* Animation qui se déclenche quand l'item passe au centre */
 @keyframes centerAnimation {
     /* Début : l'item entre dans la vue (à gauche) */
-    0%, 30% {
+    0% {
         transform: translateY(0) scale(0.9);
     }
     
     /* Milieu : l'item est au centre de l'écran */
-    40%, 60% {
-        transform: translateY(20%) scale(1.7);
+    50% {
+        transform: translateY(-10%) scale(1.1);
     }
     
     /* Fin : l'item sort de la vue (vers la droite) */
-    70%, 100% {
+    100% {
         transform: translateY(0) scale(0.9);
     }
 }
